@@ -3,4 +3,15 @@ extends layout
 block content
   h1= title
   p I AM INEVITABLE
-  button(type="button" class="btn btn-secondary") Left
+  button(type="button", class="btn btn-success" onclick="update()") Click
+  br    
+  
+  br
+  div(id="target") Display 
+   script.
+    var client_count=0
+    function update(){
+     client_count++;
+     document.getElementById("target").innerHTML=`value now ${client_count}`
+     }
+  br
