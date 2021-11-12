@@ -1,13 +1,26 @@
 var Tea = require("../models/tea");
 
 // List of all teas
-exports.tea_list = function (req, res) {
-  res.send("NOT IMPLEMENTED: tea list");
+exports.tea_list = async function (req, res) {
+  try {
+    theteas = await Tea.find();
+    res.send(theteas);
+  } catch (err) {
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+  }
 };
 
 // for a specific tea.
-exports.tea_detail = function (req, res) {
-  res.send("NOT IMPLEMENTED: tea detail: " + req.params.id);
+exports.tea_detail = async function (req, res) {
+  console.log("detail"  + req.params.id) 
+    try { 
+        result = await Tea.findById( req.params.id) 
+        res.send(result) 
+    } catch (error) { 
+        res.status(500) 
+        res.send(`{"error": document for id ${req.params.id} not found`); 
+    } 
 };
 
 // Handle tea create on POST.
@@ -30,24 +43,37 @@ exports.tea_create_post = async function (req, res) {
 };
 
 // Handle tea delete form on DELETE.
-exports.tea_delete = function (req, res) {
-  res.send("NOT IMPLEMENTED: tea delete DELETE " + req.params.id);
+exports.tea_delete =async function (req, res) {
+  console.log("delete "  + req.params.id) 
+    try { 
+        result = await Tea.findByIdAndDelete( req.params.id) 
+        console.log("Removed " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": Error deleting ${err}}`); 
+    } 
 };
 
 // Handle tea update form on PUT.
-exports.tea_update_put = function (req, res) {
-  res.send("NOT IMPLEMENTED: tea update PUT" + req.params.id);
-};
-
-// List of all teas
-exports.tea_list = async function (req, res) {
-  try {
-    theteas = await Tea.find();
-    res.send(theteas);
-  } catch (err) {
-    res.status(500);
-    res.send(`{"error": ${err}}`);
-  }
+exports.tea_update_put =async function (req, res) {
+  console.log(`update on id ${req.params.id} with body 
+${JSON.stringify(req.body)}`) 
+    try { 
+        let toUpdate = await Tea.findById( req.params.id) 
+        // Do updates of properties 
+        if(req.body.costume_type)  
+               toUpdate.tea_brand = req.body.tea_brand; 
+        if(req.body.size) toUpdate.size = req.body.size; 
+        if(req.body.price) toUpdate.price = req.body.price; 
+        let result = await toUpdate.save(); 
+        console.log("Sucess " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": ${err}: Update for id ${req.params.id} 
+failed`); 
+    } 
 };
 
 // VIEWS
@@ -61,4 +87,59 @@ exports.tea_view_all_Page = async function(req, res) {
       res.status(500); 
       res.send(`{"error": ${err}}`); 
   }   
+}; 
+
+exports.tea_view_one_Page = async function(req, res) { 
+  console.log("single view for id "  + req.query.id) 
+  try{ 
+      result = await Tea.findById( req.query.id) 
+      res.render('teadetail',  
+{ title: 'Tea Detail', toShow: result }); 
+  } 
+  catch(err){ 
+      res.status(500) 
+      res.send(`{'error': '${err}'}`); 
+  } 
+}; 
+
+// Handle building the view for creating a costume. 
+// No body, no in path parameter, no query. 
+// Does not need to be async 
+exports.tea_create_Page =  function(req, res) { 
+    console.log("create view") 
+    try{ 
+        res.render('teacreate', { title: 'Tea Create'}); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+}; 
+
+// Handle building the view for updating a costume. 
+// query provides the id 
+exports.tea_update_Page =  async function(req, res) { 
+    console.log("update view for item "+req.query.id) 
+    try{ 
+        let result = await Tea.findById(req.query.id) 
+        res.render('teaupdate', { title: 'Tea Update', toShow: result }); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+}; 
+
+// Handle a delete one view with id from query 
+exports.tea_delete_Page = async function(req, res) { 
+  console.log("Delete view for id "  + req.query.id) 
+  try{ 
+      result = await Tea.findById(req.query.id) 
+      res.render('teadelete', { title: 'Tea Delete', toShow: 
+result }); 
+  } 
+  catch(err){ 
+      res.status(500) 
+      res.send(`{'error': '${err}'}`); 
+  } 
 }; 

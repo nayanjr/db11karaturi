@@ -6,3 +6,23 @@ body {
 a {
   color: #00B7FF;
 }
+
+.teaAttr { 
+  background-color: rgb(110, 165, 228); 
+  width: 120px; 
+}
+.col-sm-{
+  color: darkgray;
+} 
+.col-sm-9{
+  color: sandybrown;
+}
+#size{
+  width: 35%;
+}
+#price{
+  width: 35%;
+}
+#tea_brand{
+  width: 35%;
+}

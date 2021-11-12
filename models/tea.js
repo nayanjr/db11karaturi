@@ -6,4 +6,4 @@ const teaSchema = mongoose.Schema({
 }) 
  
 module.exports = mongoose.model("Tea", 
-teaSchema)
+teaSchema) 

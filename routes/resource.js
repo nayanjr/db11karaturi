@@ -12,20 +12,18 @@ router.get("/resource", api_controller.api);
 /// tea ROUTES ///
 
 // POST request for creating a tea.
-router.post("/resource/teas", tea_controller.tea_create_post);
+router.post("/resource/tea", tea_controller.tea_create_post);
 
 // DELETE request to delete tea.
-router.delete("/resource/teas/:id", tea_controller.tea_delete);
+router.delete("/resource/tea/:id", tea_controller.tea_delete);
 
 // PUT request to update tea.
-router.put("/resource/teas/:id", tea_controller.tea_update_put);
+router.put("/resource/tea/:id", tea_controller.tea_update_put);
 
 // GET request for one tea.
-router.get("/resource/teas/:id", tea_controller.tea_detail);
+router.get("/resource/tea/:id", tea_controller.tea_detail);
 
 // GET request for list of all tea items.
-router.get("/resource/teas", tea_controller.tea_list);
-
-
+router.get("/resource/tea", tea_controller.tea_list); 
 
 module.exports = router;

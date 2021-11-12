@@ -58,12 +58,12 @@ async function recreateDB() {
   // Delete everything
   await Tea.deleteMany();
   let instance1 = new Tea({
-    tea_brand: "Starbucks",
+    tea_brand: "Red Label",
     size: "Large",
     price: 10
   });
   let instance2 = new Tea({
-    tea_brand: "McDonalds",
+    tea_brand: "Taj",
     size: "Small",
     price: 7
   });
