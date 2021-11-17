@@ -89,6 +89,62 @@ exports.tea_view_all_Page = async function(req, res) {
   }   
 }; 
 
+// Handle a show one view with id specified by query
+exports.costume_view_one_Page = async function(req, res) {
+console.log("single view for id " + req.query.id)
+try{
+result = await Tea.findById( req.query.id)
+res.render('tea',
+{ title: 'Tea Detail', toShow: result });
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};
+
+// Handle building the view for creating a costume.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.tea_create_Page = function(req, res) {
+console.log("create view")
+try{
+res.render('teacreate', { title: 'Tea Create'});
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};
+
+// Handle a delete one view with id from query
+exports.costume_delete_Page = async function(req, res) {
+console.log("Delete view for id " + req.query.id)
+try{
+result = await Costume.findById(req.query.id)
+res.render('teadelete', { title: 'Tea Delete', toShow:
+result });
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};
+
+// Handle building the view for updating a costume.
+// query provides the id
+exports.costume_update_Page = async function(req, res) {
+console.log("update view for item "+req.query.id)
+try{
+let result = await Costume.findById(req.query.id)
+res.render('teaupdate', { title: 'Tea Update', toShow: result });
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};
+
 exports.tea_view_one_Page = async function(req, res) { 
   console.log("single view for id "  + req.query.id) 
   try{ 
