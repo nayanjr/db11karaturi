@@ -21,6 +21,9 @@ block content
    - let teasize = toShow.size 
    - let teaprice = toShow.price
    - let actionid = "/resource/tea/" + teaid
+      
+    
+
    script let actionid = "#{actionid}" 
  
    form(id='teaForm', action=actionid, method="PUT") 
@@ -34,7 +37,7 @@ block content
         label(for='price' class="form-label") Tea Price 
         input#price(type='number',class="form-control", name='price', value= teaprice) 
     input(type="submit",class="btn btn-primary") 
- 
+   
    script. 
     document.forms['teaForm'].addEventListener('submit', (event) => { 
       event.preventDefault(); 
